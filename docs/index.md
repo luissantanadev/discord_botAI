@@ -10,8 +10,12 @@ Bot para Discord que utiliza modelos de linguagem natural (LLM) para responder p
 - Cria threads automáticas para organizar conversas por usuário.
 - Envia respostas por mensagem direta (DM), se permitido.
 - Integração com modelo Ollama (Llama 3.2).
-- Estrutura modular para fácil expansão (ex: integração com OpenAI).
+- Integração pronta para OpenAI (ChatGPT, GPT-4, etc).
+- Estrutura modular para fácil expansão.
 - Logs de atividades e erros para fácil depuração.
+- Suporte a múltiplos modelos de linguagem.
+- Fácil configuração via arquivo `.env`.
+- Documentação gerada automaticamente com MkDocs.
 
 ---
 
@@ -21,6 +25,7 @@ Bot para Discord que utiliza modelos de linguagem natural (LLM) para responder p
 - Conta e servidor no Discord
 - Acesso ao Ollama rodando localmente (ou endpoint configurado)
 - Token de bot do Discord
+- (Opcional) Chave de API da OpenAI para integração
 
 ---
 
@@ -36,6 +41,8 @@ Bot para Discord que utiliza modelos de linguagem natural (LLM) para responder p
    - Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
      ```
      DISCORD_TOKEN='SEU_TOKEN_AQUI'
+     # Para OpenAI (opcional)
+     OPENAI_API_KEY='SUA_CHAVE_OPENAI'
      ```
 
 3. **Instale as dependências**
@@ -64,21 +71,51 @@ Bot para Discord que utiliza modelos de linguagem natural (LLM) para responder p
 
 ---
 
+## Documentação com MkDocs
+
+Este projeto utiliza o [MkDocs](https://www.mkdocs.org/) para documentação.
+
+### Instalar o MkDocs
+
+```bash
+pip install mkdocs
+```
+
+### Gerar e visualizar a documentação localmente
+
+```bash
+mkdocs serve
+```
+
+Acesse [http://localhost:8000](http://localhost:8000) no navegador para visualizar.
+
+### Gerar documentação estática
+
+```bash
+mkdocs build
+```
+
+Os arquivos HTML serão gerados na pasta `site/`.
+
+---
+
 ## Estrutura do Projeto
 
 ```
 discord_botAI/
 │
-├── main.py              # Arquivo principal do bot
-├── requirements.txt     # Dependências do projeto
-├── .env                 # Variáveis de ambiente (não versionado)
-├── /docs                # Documentação do projeto
+├── main.py                        # Arquivo principal do bot
+├── requirements.txt               # Dependências do projeto
+├── .env                           # Variáveis de ambiente (não versionado)
+├── /docs                          # Documentação do projeto (MkDocs)
 │   └── index.md
-├── /src                 # Código-fonte modularizado
-│   ├── bot.py           # Lógica do bot Discord
-│   ├── ollama_client.py # Integração com Ollama
-│   └── utils.py         # Funções utilitárias
-└── README.md            # Resumo do projeto
+├── /src                           # Código-fonte modularizado
+│   ├── bot.py                     # Lógica do bot Discord
+│   ├── ollama_bot.py              # Integração com Ollama
+│   ├── OpenAi_API/
+│   │   └── openai_bot.py          # Integração com OpenAI
+│   └── utils.py                   # Funções utilitárias
+└── README.md                      # Resumo do projeto
 ```
 
 ---
@@ -87,6 +124,7 @@ discord_botAI/
 
 - Para integrar com outros LLMs (ex: OpenAI), adicione as credenciais e endpoints necessários no `.env` e implemente novos clientes em `/src`.
 - Permissões do bot: certifique-se de que o bot tem permissão para ler, escrever e criar threads no canal desejado.
+- Para alternar entre modelos (Ollama ou OpenAI), ajuste a configuração no código principal.
 
 ---
 
