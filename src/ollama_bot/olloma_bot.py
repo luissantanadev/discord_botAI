@@ -2,7 +2,7 @@ import discord
 import asyncio
 from dotenv import load_dotenv
 import os
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 
 # Carregar variáveis de ambiente
 load_dotenv()
