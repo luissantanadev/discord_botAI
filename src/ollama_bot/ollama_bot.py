@@ -5,6 +5,7 @@ import os
 from langchain_ollama import ChatOllama
 import requests
 import re
+from pubg_api.pubg_api import buscar_dados_pubg 
 
 class OllamaBot:
     def __init__(self):
@@ -98,6 +99,20 @@ class OllamaBot:
             pergunta = message.content.strip()
             if not pergunta:
                 await message.channel.send("❓ Envie uma mensagem com sua pergunta.")
+                return
+
+            # Novo: comando "status" para PUBG
+            if pergunta.lower().startswith("status"):
+                partes = pergunta.split(maxsplit=1)
+                if len(partes) == 2:
+                    player_name = partes[1]
+                else:
+                    await message.channel.send("Informe o nome do jogador após 'status'. Exemplo: status ThanatosFull")
+                    return
+                await message.channel.send("🔎 Buscando status do jogador no PUBG...")
+                loop = asyncio.get_event_loop()
+                dados = await loop.run_in_executor(None, buscar_dados_pubg, player_name)
+                await message.channel.send(dados)
                 return
 
             user_id = str(message.author.id)
