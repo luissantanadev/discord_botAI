@@ -7,14 +7,11 @@ import openai
 class OpenAIBot:
     def __init__(self, model="gpt-3.5-turbo"):
         load_dotenv()
-        self.DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
         self.api_key = os.getenv("OPENAI_API_KEY")
-        if not self.DISCORD_TOKEN:
-            raise EnvironmentError("❌ DISCORD_TOKEN não definido no .env!")
         if not self.api_key:
             raise ValueError("OPENAI_API_KEY não encontrado no ambiente.")
-        openai.api_key = self.api_key
         self.model = model
+        self.DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
         intents = discord.Intents.default()
         intents.message_content = True
         self.client = discord.Client(intents=intents)
@@ -22,7 +19,8 @@ class OpenAIBot:
 
     def perguntar_openai(self, prompt, temperature=0.7, max_tokens=512):
         try:
-            response = openai.ChatCompletion.create(
+            client = openai.OpenAI(api_key=self.api_key)
+            response = client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=temperature,
