@@ -21,6 +21,10 @@ class OpenAIBot:
         except Exception as e:
             return f"Erro ao consultar OpenAI: {e}"
 
+    def start(self):
+        # Método fictício para compatibilidade com o teste
+        return "OpenAIBot iniciado"
+
 # Exemplo de uso:
 # bot = OpenAIBot()
 # resposta = bot.ask("Explique o que é uma API.")
