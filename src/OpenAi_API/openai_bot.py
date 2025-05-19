@@ -22,10 +22,9 @@ class OpenAIBot:
             return f"Erro ao consultar OpenAI: {e}"
 
     def start(self):
-        # Método fictício para compatibilidade com o teste
-        return "OpenAIBot iniciado"
+        # Método fictício para simular inicialização, similar ao ollama_bot
+        print("OpenAIBot iniciado!")
+        # Aqui você pode adicionar lógica de integração com Discord, se desejar
 
-# Exemplo de uso:
-# bot = OpenAIBot()
-# resposta = bot.ask("Explique o que é uma API.")
-# print(resposta)
+# Instância global para compatibilidade com importação direta
+openai_bot = OpenAIBot()
